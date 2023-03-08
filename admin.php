@@ -55,7 +55,6 @@ if(!isset($_SESSION["userid"])){
 
     h1 {
         text-align: center;
-        
         color: white;
     }
     </style>
