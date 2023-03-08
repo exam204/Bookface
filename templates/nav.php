@@ -5,37 +5,52 @@ $page_name = basename($_SERVER['PHP_SELF']);
 if ($page_name == "index.php") {
     $active_index = "active";
 } else {
-    $active = "";
+    $active_index = "";
 }
 if ($page_name == "signup.php") {
     $active_signup = "active";
 } else {
-    $active = "";
+    $active_signup = "";
 }
 if ($page_name == "login.php") {
     $active_login = "active";
 } else {
-    $active = "";
+    $active_login = "";
 }
 if ($page_name == "messages.php") {
     $active_messages = "active";
 } else {
-    $active = "";
+    $active_messages = "";
 }
 if ($page_name == "account.php") {
     $active_account = "active";
 } else {
-    $active = "";
+    $active_account = "";
 }
 if ($page_name == "admin.php") {
     $active_admin = "active";
 } else {
-    $active = "";
+    $active_admin = "";
 }
 if ($page_name == "edit-user.php") {
     $active_edit = "active";
 } else {
-    $active = "";
+    $active_edit = "";
+}
+if ($page_name == "about-us.php"){
+    $active_aboutus = "active";
+} else {
+    $active_aboutus = "";
+}
+if ($page_name == "contact-us.php"){
+    $active_contactus = "active";
+} else {
+    $active_contactus = "";
+}
+if ($page_name == "dashboard.php"){
+    $active_dashboard = "active";
+} else {
+    $active_dashboard = "";
 }
 ?>
 
@@ -64,9 +79,15 @@ if ($page_name == "edit-user.php") {
                 </li>
             <?php endif;?>
 
+            <?php if(isset($_SESSION['userid'])):?>
+                <li class="nav-item">
+                    <a class="nav-link <?=$active_dashboard?>" href="dashboard.php">Dashboard</a>
+                </li>
+            <?php endif;?>
+
             <?php if (isset($_SESSION['userid'])):?>
                 <li class="nav-item">
-                    <a class="nav-link <?=$active_messages?>" href="messages.php">Messages</a>
+                    <a class="nav-link <?=$active_messages?>" href="messages.php">Forum</a>
                 </li>
             <?php endif;?>
             
@@ -82,6 +103,12 @@ if ($page_name == "edit-user.php") {
                 </li>
             <?php endif;?>
 
+                <li class="nav-item">
+                    <a class="nav-link <?=$active_aboutus?>" href="about-us.php">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link <?=$active_contactus?>" href="contact-us.php">Contact Us</a>
+                </li>
 
         </ul>
         <?php if(isset($_SESSION['userid'])):?>

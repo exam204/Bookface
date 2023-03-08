@@ -25,7 +25,7 @@ session_start()
     check_admin();
     $_SESSION["signup"] = true;
     $_SESSION["loggedin"] = true;
-    $_SESSION["userid"] = $_POST["userid"];
+
 ?>
 
 

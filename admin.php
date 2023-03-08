@@ -33,10 +33,11 @@ if(!isset($_SESSION["userid"])){
     }
 
     table th {
-        background-color: #2780E3;
+        
         color: white;
         text-align: left;
         padding: 12px;
+        
     }
 
     table th,
@@ -49,12 +50,12 @@ if(!isset($_SESSION["userid"])){
     }
 
     table tr:nth-of-type(even) {
-        background-color: #f3f3f3;
+        
     }
 
     h1 {
         text-align: center;
-        background: #2780E3;
+        
         color: white;
     }
     </style>

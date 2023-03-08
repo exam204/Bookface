@@ -40,7 +40,7 @@
     emailauth();
 
 ?>
-    
+    <?php echo $_SESSION["authnumber"]?>
     <form action="signup-action.php" method="post">
         <div class="form-group" >
             <label for="exampleInputAuth" class="form-label mt-4" style="margin-top: 1%; margin-left: auto; margin-right: auto; width: 20%; display:block">Code</label>
@@ -54,7 +54,7 @@
 <?php
     function emailauth(){
         $authnumber = rand(100000, 999999);
-
+        $_SESSION["authnumber"] = $authnumber;
         
         //Create an instance; passing `true` enables exceptions
         $mail = new PHPMailer(true);

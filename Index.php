@@ -8,20 +8,26 @@ session_start();
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BookFace</title>
+    <title>Health Advice Group</title>
     <?php require dirname(__FILE__)."/Style/links.php"; ?>
     <?php require dirname(__FILE__)."/PHPFunc/db-connect.php";?>
 
 </head>
 <body>
-    
-     
-
-
 
 
 <?php require dirname(__FILE__). "/templates/nav.php"; ?>
-  
+
+<style>
+        h1 {
+        text-align: center;
+        color: white;
+        font-size: 400%;
+    }
+</style>
+
+<h1> Welcome </h1>
+
 
     <?php
     if(isset($_SESSION["signup"])){
@@ -55,17 +61,7 @@ session_start();
         unset($_SESSION["tried-to-access-admin"]);
     }
    
-    if(isset($_SESSION["userid"])){
-        
-        echo "<div class = 'conatiner'>
-        <img src='Images\logged_in_bookface.png' class='img-fluid rounded-top' alt='' style='margin-top: 1%; margin-left: auto; margin-right: auto; width: 70%; height: 80%; display:block'>
-        </div>";
-    }
-    if(!isset($_SESSION["userid"])){
-        echo "<div class = 'conatiner'>
-        <img src='Images\BOOKFACE.png' class='img-fluid rounded-top' alt='' style='margin-top: 1%; margin-left: auto; margin-right: auto; width: 80%; display:block'>
-        </div>";
-    }
+
 
 
     
