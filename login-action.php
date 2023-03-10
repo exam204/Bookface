@@ -23,6 +23,7 @@ session_start()
     //$conn = connect();
     dbchecklogin();
     check_admin();
+    getuserspc();
     $_SESSION["signup"] = true;
     $_SESSION["loggedin"] = true;
 

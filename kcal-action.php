@@ -2,10 +2,10 @@
 session_start();
 require dirname(__FILE__). '/PHPFunc/db-connect.php';
 
-function addSteps($steps, $date) {
+function addKcal($kcal, $date) {
     $conn = connect();
-    $stmt = $conn->prepare('INSERT INTO steps (date, steps, userid) VALUES (?, ?, ?)');
-    $stmt->bind_param('sii', $date, $steps, $_SESSION['userid']);
+    $stmt = $conn->prepare('INSERT INTO kcal (date, kcal, userid) VALUES (?, ?, ?)');
+    $stmt->bind_param('sii', $date, $kcal, $_SESSION['userid']);
     $result = $stmt->execute();
     $stmt->close();
     $conn->close();
@@ -14,20 +14,20 @@ function addSteps($steps, $date) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (!isset($_POST['steps']) || !isset($_POST['date'])) {
+    if (!isset($_POST['kcal']) || !isset($_POST['date'])) {
         http_response_code(400); // Bad Request
         
     }
 
-    $steps = intval($_POST['steps']);
+    $kcal = intval($_POST['kcal']);
     $date = $_POST['date'];
 
-    if ($steps <= 0) {
+    if ($kcal <= 0) {
         http_response_code(400); // Bad Request
         
     }
 
-    $success = addSteps($steps, $date);
+    $success = addKcal($kcal, $date);
 
     if (!$success) {
         http_response_code(500); // Internal Server Error

@@ -41,6 +41,21 @@ function dbchecklogin(){
     }
 }
 
+function getuserspc(){
+    //get users postocde from database
+    $conn = connect();
+    $query = "SELECT postcode FROM users WHERE id = $_SESSION[userid]";
+    $result = mysqli_query($conn, $query);
+    $num = mysqli_num_rows($result);
+    if ($num == 1){
+        while($row = mysqli_fetch_assoc($result)){
+            $postcode = $row["postcode"];
+        }
+    }
+    $_SESSION["postcode"] = $postcode;
+
+}
+
 function check_admin(){
     //echo "working";
     $conn = connect();
