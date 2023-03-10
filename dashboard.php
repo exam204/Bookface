@@ -103,7 +103,7 @@ html, body , .container {
 /* For presentation only, no need to copy the code below */
 
 .container * {
-  border: 1px solid red;
+  
   position: relative;
 }
 
