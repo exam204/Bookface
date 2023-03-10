@@ -1,35 +1,39 @@
 <?php
-require dirname(__FILE__). 'PHPfunc/db-connect.php';
+session_start();
+require dirname(__FILE__). '/PHPFunc/db-connect.php';
 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-  http_response_code(405); // Method Not Allowed
-  exit();
+function addSteps($steps, $date) {
+    $conn = connect();
+    $stmt = $conn->prepare('INSERT INTO steps (date, steps, userid) VALUES (?, ?, ?)');
+    $stmt->bind_param('sii', $date, $steps, $_SESSION['userid']);
+    $result = $stmt->execute();
+    $stmt->close();
+    $conn->close();
+    return $result;
 }
 
-if (!isset($_POST['steps']) || !isset($_POST['date'])) {
-  http_response_code(400); // Bad Request
-  exit();
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (!isset($_POST['steps']) || !isset($_POST['date'])) {
+        http_response_code(400); // Bad Request
+        exit();
+    }
+
+    $steps = intval($_POST['steps']);
+    $date = $_POST['date'];
+
+    if ($steps <= 0) {
+        http_response_code(400); // Bad Request
+        exit();
+    }
+
+    $success = addSteps($steps, $date);
+
+    if (!$success) {
+        http_response_code(500); // Internal Server Error
+        exit();
+    }
+
+    http_response_code(200); // OK
+    exit();
 }
-
-$steps = intval($_POST['steps']);
-$date = $_POST['date'];
-
-if ($steps <= 0) {
-  http_response_code(400); // Bad Request
-  exit();
-}
-
-$stmt = $pdo->prepare('INSERT INTO steps (date, steps) VALUES (?, ?)');
-$stmt->execute([$date, $steps]);
-
-$stmt = $pdo->prepare('SELECT date, steps FROM steps ORDER BY date ASC');
-$stmt->execute();
-$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-$data = array();
-foreach ($rows as $row) {
-  $data[] = array(strtotime($row['date']) * 1000, intval($row['steps']));
-}
-
-echo json_encode($data);
-?>
+  ?>

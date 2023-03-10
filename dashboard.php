@@ -10,7 +10,7 @@ session_start();
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBY8fSIy0uw7pMxa86nkkM-BLQ9DA_4t-0"></script>
 	  <?php require dirname(__FILE__). "/Style/links.php";?>
 	  <?php require dirname(__FILE__). "/PHPFunc/db-connect.php";?>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 	<style>
 .container {  display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
@@ -162,13 +162,13 @@ html, body , .container {
     </div>
     <!-- steps -->
     <div class="Step">
-      <form id="steps-form" action="steps-action.php" method="post">
-        <label for="steps-input">Steps:</label>
-        <input type="number" id="steps-input" name="steps">
-        <label for="date-input">Date:</label>
-        <input type="date" id="date-input" name="date">
-        <button type="submit">Submit</button>
-      </form>
+    <form method="post" action="steps-action.php">
+        <label>Date:</label>
+        <input type="date" name="date" required><br><br>
+        <label>Steps:</label>
+        <input type="number" name="steps" required><br><br>
+        <input type="submit" value="Submit">
+    </form>
 
       <div id="steps-chart-container">
         <canvas id="steps-chart"></canvas>
