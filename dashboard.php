@@ -8,35 +8,33 @@ session_start();
     
     <title>Air Quality Map</title>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBY8fSIy0uw7pMxa86nkkM-BLQ9DA_4t-0"></script>
-	<?php require dirname(__FILE__). "/Style/links.php";?>
-	<?php require dirname(__FILE__). "/PHPFunc/db-connect.php";?>
+	  <?php require dirname(__FILE__). "/Style/links.php";?>
+	  <?php require dirname(__FILE__). "/PHPFunc/db-connect.php";?>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 	<style>
-	.container {  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+.container {  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 0.25fr 0.5fr 1fr 0.25fr;
   gap: 0px 0px;
   grid-auto-flow: row;
   grid-template-areas:
-    "Navb Navb Navb Navb Navb Navb"
-    "step step kcal kcal heft heft"
-    "step step kcal kcal heft heft"
-    "imsg dash dash dash dash imgs"
-    "imsg dash dash dash dash imgs";
+    "Navb Navb Navb Navb Navb"
+    "Step Kcal Heft Health-Advice Health-Advice"
+    "Dash Dash Dash Health-Advice Health-Advice"
+    ". . . . .";
 }
 
 .Navb { grid-area: Navb; }
 
-.step { grid-area: step; }
+.Step { grid-area: Step; }
 
-.kcal { grid-area: kcal; }
+.Kcal { grid-area: Kcal; }
 
-.heft { grid-area: heft; }
+.Heft { grid-area: Heft; }
 
-.dash { grid-area: dash; }
+.Dash { grid-area: Dash; }
 
-.imgs { grid-area: imgs; }
-
-.imsg { grid-area: imsg; }
+.Health-Advice { grid-area: Health-Advice; }
 
 
 html, body , .container {
@@ -52,7 +50,7 @@ html, body , .container {
 }
 
 .container *:after {
-  content:attr(class);
+  /*content:attr(class);*/
   position: absolute;
   top: 0;
   left: 0;
@@ -157,38 +155,95 @@ html, body , .container {
     </script>
   </head>
   <body>
-	  
-
 
   <div class="container">
     <div class="Navb">
       <?php require dirname(__FILE__). "/templates/nav.php"; ?>
     </div>
-    <div class="step"></div>
-    <div class="kcal"></div>
-    <div class="heft"></div>
+    <!-- steps -->
+    <div class="Step">
+      <form id="steps-form" action="steps-action.php" method="post">
+        <label for="steps-input">Steps:</label>
+        <input type="number" id="steps-input" name="steps">
+        <label for="date-input">Date:</label>
+        <input type="date" id="date-input" name="date">
+        <button type="submit">Submit</button>
+      </form>
 
-    <div class="dash">
-    <form>
-      <label for="postcode">Enter postcode:</label>
-      <input type="text" id="postcode" name="postcode">
-      <button type="button" onclick="initMap()">Get Air Quality Data</button>
-    </form>
+      <div id="steps-chart-container">
+        <canvas id="steps-chart"></canvas>
+      </div>
+    </div>
+    <!-- steps -->
+    <div class="Kcal">
+
+    </div>
+    <div class="Heft">
+
+    </div>
+    <div class="Dash">
+      <form>
+        <label for="postcode">Enter postcode:</label>
+        <input type="text" id="postcode" name="postcode">
+        <button type="button" onclick="initMap()">Get Air Quality Data</button>
+      </form>
       <div id="map" style="height: 400px; width: 50%;" ></div>
       <div name="airvisual_widget" key="64089b73b0b7ebb6110eaeea"></div>
       <script type="text/javascript" src="https://widget.iqair.com/script/widget_v3.0.js"></script>
     </div>
+    <div class="Health-Advice">
 
-    <div class="imgs"></div>
-    <div class="imsg"></div>
+    </div>
   </div>
 
+<script>
+const form = document.getElementById('steps-form');
+const chartCanvas = document.getElementById('steps-chart');
+const chart = new Chart(chartCanvas, {
+  type: 'line',
+  data: {
+    labels: [],
+    datasets: [{
+      label: 'Steps',
+      data: [],
+    }],
+  },
+});
 
+form.addEventListener('submit', (event) => {
+  event.preventDefault();
 
+  const stepsInput = document.getElementById('steps-input');
+  const dateInput = document.getElementById('date-input');
 
+  // Validate input
+  if (!stepsInput.value || !dateInput.value) {
+    alert('Please enter both steps and date.');
+    return;
+  }
 
-	
+  // Submit data via AJAX
+  const xhr = new XMLHttpRequest();
+  xhr.open('POST', 'submit-steps.php');
+  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  xhr.onload = () => {
+    if (xhr.status === 200) {
+      // Update chart with new data
+      const data = JSON.parse(xhr.responseText);
+      chart.data.labels = data.map((datum) => datum.date);
+      chart.data.datasets[0].data = data.map((datum) => datum.steps);
+      chart.update();
+    } else {
+      alert(`Error submitting steps: ${xhr.statusText}`);
+    }
+  };
+  xhr.send(`steps=${stepsInput.value}&date=${dateInput.value}`);
 
+  // Clear form
+  stepsInput.value = '';
+  dateInput.value = '';
+});
+    </script>
 </body>
 </html>
 
