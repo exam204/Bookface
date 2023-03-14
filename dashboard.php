@@ -396,6 +396,9 @@ html, body , .container {
             <p class="card-text">Wind speed: <?php echo $weather['ws'] ?> m/s</p>
             <p class="card-text">Air quality index: <?php echo $aqi ?></p>
             <p class="card-text">Pollen: <?php echo $data['data']['current']['pollution']['aqicn'] ?></p>
+
+
+
       </div>
     </div>
   </div>

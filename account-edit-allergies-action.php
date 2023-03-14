@@ -19,19 +19,29 @@ session_start()
     
 <?php
 
-// update user's allergies in the database
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  $conn = connect();
-  $allergies = implode(",", $_POST["allergies"]); // convert array of selected allergies to comma-separated string
-  $userid = $_SESSION["userid"];
-  $query = "UPDATE users SET allergies=? WHERE id=?";
-  $stmt = $conn->prepare($query);
-  $stmt->bind_param("ss", $allergies, $email);
-  $stmt->execute();
-  $_SESSION["allergies"] = $allergies; // update allergies in session variable
-  header("Location: account-edit.php"); // redirect to edit details page
-  exit();
+session_start();
+if(!isset($_SESSION["userid"])){
+    header("location: login.php");
+    exit;
 }
+
+if ($_POST['allergies'] == null){
+	$allergies = " ";
+}
+else{
+	$allergies = implode(',', $_POST['allergies']);
+}
+
+// update user allergies
+$user_id = $_SESSION["userid"];
+$conn = connect();
+$query = "UPDATE users SET allergies = ? WHERE id = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("si", $allergies, $user_id);
+$stmt->execute();
+header("location: account-edit.php");
+
+
 ?>
 
 

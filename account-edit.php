@@ -108,7 +108,7 @@ html, body , .container {
         </div>
         <div class = form-group>
             <input type="hidden" name="id" value="<?= $row["id"] ?>" style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block">
-            <input type="submit" value="Update" class="btn btn-primary form-control" style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block"></input>
+            <input type="submit" value="Update" class="btn btn-success form-control" style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block"></input>
         </div>
         <div class="form-group">
             <a href="account.php" class="btn btn-primary form-control" style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block">Back</a>
@@ -117,7 +117,8 @@ html, body , .container {
   </div>
 
   <div class="alle">
-    <!-- edit details form -->
+
+    <!-- edit details form 
     <form method="post" action="account-edit-allergies-action.php">
         <div class="form-group">
             <label for="allergies" class="form-label mt-4" style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block">Allergies:</label>
@@ -140,10 +141,52 @@ html, body , .container {
             </div>
 
         </div>
-        <button type="submit" class="btn btn-primary form-control" style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block">Save Changes</button>
+        <input type="submit" value="Save Changes" class="btn btn-danger form-control" style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block"></input>
     </form>
   </div>
+    -->
+    <?php
+    $user_id = $_SESSION["userid"];
 
+    $conn = connect();
+
+    // get user allergies
+    $query = "SELECT allergies FROM users WHERE id = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $stmt->store_result();
+    $stmt->bind_result($user_allergies);
+    $stmt->fetch();
+
+    $allergies = array(
+        'Pollen',
+        'Dust',
+        'Mold',
+        'Pets',
+        'Seafood',
+        'Dairy'
+    );
+
+    $allergy_list = explode(',', $user_allergies);
+
+    ?>
+    <div class="form-group">
+        <span class ="primary form-control" style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block; text-align: center"> Edit Allergies </span>
+    </div>
+    <form action="account-edit-allergies-action.php" method="post">
+    <?php foreach ($allergies as $allergy) : ?>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="allergies[]" value="<?= $allergy ?>"
+                id="<?= $allergy ?>" <?php if (in_array($allergy, $allergy_list)) echo 'checked' ?>>
+            <label class="form-check-label" for="<?= $allergy ?>">
+                <?= $allergy ?>
+            </label>
+        </div>
+    <?php endforeach; ?>
+    <input type="submit" class="btn btn-success form-control" value="Save">
+    </form>
+</div>
 
   <div class="mis1"></div>
 
