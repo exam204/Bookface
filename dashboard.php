@@ -371,33 +371,8 @@ html, body , .container {
         <div class="card-body">
           <h5 class="card-title">Weather and Air Quality</h5>
 
-            <?php              
-            $postcode = $_SESSION["postcode"]; // replace with actual postcode
-            $google_maps_api_key = 'AIzaSyBY8fSIy0uw7pMxa86nkkM-BLQ9DA_4t-0'; // replace with actual API key
-            $air_visual_api_key = 'fc530c3a-1e3d-4e19-afa4-74045818d1f1'; // replace with actual API key
-
-            // get latitude and longitude for postcode using Google Maps API
-            $url = "https://maps.googleapis.com/maps/api/geocode/json?address=" . urlencode($postcode) . "&key=" . $google_maps_api_key;
-            $json = file_get_contents($url);
-            $data = json_decode($json, true);
-            $lat = $data['results'][0]['geometry']['location']['lat'];
-            $lng = $data['results'][0]['geometry']['location']['lng'];
-
-            // get weather and air quality data using Air Visual API
-            $url = "https://api.airvisual.com/v2/nearest_city?lat=" . $lat . "&lon=" . $lng . "&key=" . $air_visual_api_key;
-            $json = file_get_contents($url);
-            $data = json_decode($json, true);
-            $weather = $data['data']['current']['weather'];
-            $aqi = $data['data']['current']['pollution']['aqius'];
-            ?>
-
-            <p class="card-text">Temperature: <?php echo $weather['tp'] ?> &deg;C</p>
-            <p class="card-text">Humidity: <?php echo $weather['hu'] ?>%</p>
-            <p class="card-text">Wind speed: <?php echo $weather['ws'] ?> m/s</p>
-            <p class="card-text">Air quality index: <?php echo $aqi ?></p>
-            <p class="card-text">Pollen: <?php echo $data['data']['current']['pollution']['aqicn'] ?></p>
-
-
+          <div name="airvisual_widget" key="64119e7c46d37dbf858bf034"></div>
+          <script type="text/javascript" src="https://widget.iqair.com/script/widget_v3.0.js"></script>
 
       </div>
     </div>
