@@ -366,17 +366,141 @@ html, body , .container {
       <div id="map" style="height: 400px; width: 100%;" ></div>
     </div>
     <!-- Health Advice -->
-    <div class="Health-Advice">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Weather and Air Quality</h5>
+<div class="Health-Advice">
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Weather and Air Quality</h5>
 
-          <div name="airvisual_widget" key="64119e7c46d37dbf858bf034"></div>
-          <script type="text/javascript" src="https://widget.iqair.com/script/widget_v3.0.js"></script>
+      <div name="airvisual_widget" key="6411d64e653f8acc0aa6507d"></div>
+      <script type="text/javascript" src="https://widget.iqair.com/script/widget_v3.0.js"></script>
 
-      </div>
-    </div>
-  </div>
+
+      <?php
+      $google_maps_api_key = 'AIzaSyBY8fSIy0uw7pMxa86nkkM-BLQ9DA_4t-0'; // replace with actual API key
+      $air_visual_api_key = 'fc530c3a-1e3d-4e19-afa4-74045818d1f1'; // replace with actual API key
+
+      // get postcode from session
+
+      $postcode = $_SESSION["postcode"];
+
+      // get latitude and longitude for postcode using Google Maps API
+      $url = "https://maps.googleapis.com/maps/api/geocode/json?address=" . urlencode($postcode) . "&key=" . $google_maps_api_key;
+      $json = file_get_contents($url);
+      $data = json_decode($json, true);
+      $lat = $data['results'][0]['geometry']['location']['lat'];
+      $lng = $data['results'][0]['geometry']['location']['lng'];
+
+      // get weather and air quality data using Air Visual API
+      $url = "https://api.airvisual.com/v2/nearest_city?lat=" . $lat . "&lon=" . $lng . "&key=" . $air_visual_api_key;
+      $json = file_get_contents($url);
+      $data = json_decode($json, true);
+      /*
+      if (isset($data['data']['current']['weather']['wind'])) {
+        $wind_speed = $data['data']['current']['weather']['wind']['speed'];
+      } else {
+        $wind_speed = 0;
+      }
+      if (isset($data['data']['current']['weather']['tp']) && $data['data']['current']['weather']['tp'] !== null) {
+        $temperature = $data['data']['current']['weather']['tp'];
+      } else {
+        $temperature = 0;
+      }
+      */
+      
+      $temperature = $data['data']['current']['weather']['tp'];
+      $weather = $data['data']['current']['weather'];
+      $aqi = $data['data']['current']['pollution']['aqius'];
+      $pollen = $data['data']['current']['pollution']['aqicn'];
+
+      // get the user's allergies from the database
+      $user_id = $_SESSION["userid"];
+      $query = "SELECT allergies FROM users WHERE id=?";
+      $stmt = $conn->prepare($query);
+      $stmt->bind_param("i", $user_id);
+      $stmt->execute();
+      $stmt->bind_result($allergies);
+      $stmt->fetch();
+
+      if ($allergies == " ") {
+        if ($aqi <= 10) {
+            echo "Air quality is good. Enjoy outdoor activities!";
+        } else {
+            // provide general health advice for air quality index above 10
+            if ($weather == 'clear' || $weather == 'cloudy') {
+                if ($temperature >= 50 && $temperature <= 80) {
+                    echo "Air quality is moderate. It's a great day to be outdoors!";
+                } else if ($temperature < 50) {
+                    echo "Air quality is moderate. Bundle up and enjoy the fresh air!";
+                } else {
+                    echo "Air quality is moderate. Be sure to stay hydrated!";
+                }
+            } else if ($weather == 'rainy') {
+                echo "Air quality is moderate. Bring an umbrella and enjoy the rain!";
+            } else {
+                echo "Air quality is moderate. Be prepared for any weather conditions!";
+            }
+        }
+    }
+
+// personalized health advice based on weather data, air quality data, and allergies
+//$allergies_csv = "";
+$allergies = explode(',', $allergies);
+
+if (in_array('Pollen', $allergies)) {
+    if ($pollen <= 50) {
+        echo "Pollen levels are low. You can safely spend time outdoors!";
+    } else if ($pollen <= 100) {
+        echo "Pollen levels are moderate. You may want to limit your time outdoors.";
+    } else if ($pollen <= 150) {
+        echo "Pollen levels are high. You may want to stay indoors.";
+    } else {
+        echo "Pollen levels are very high. You should stay indoors as much as possible.";
+    }
+}
+
+if (in_array('Dust', $allergies)) {
+    if ($aqi <= 50) {
+        echo "Air quality is good. Enjoy outdoor activities!";
+    } else if ($aqi <= 100) {
+        if ($weather == 'clear' || $weather == 'cloudy') {
+            if ($temperature >= 50 && $temperature <= 80) {
+                echo "Air quality is moderate. It's a great day to be outdoors!";
+            } else if ($temperature < 50) {
+                echo "Air quality is moderate. Bundle up and enjoy the fresh air!";
+            } else {
+                echo "Air quality is moderate. Be sure to stay hydrated!";
+            }
+        } else if ($weather == 'rainy') {
+            echo "Air quality is moderate. Bring an umbrella and enjoy the rain!";
+        } else {
+            echo "Air quality is moderate. Be prepared for any weather conditions!";
+        }
+    } else if ($aqi <= 150) {
+        echo "Air quality is unhealthy for sensitive groups. If you have heart or lung disease, older adults, and children, you should reduce prolonged or heavy exertion.";
+    } else if ($aqi <= 200) {
+        echo "Air quality is unhealthy. If you have heart or lung disease, older adults, and children should avoid prolonged or heavy exertion. Everyone else should reduce prolonged or heavy exertion.";
+    } else if ($aqi <= 300) {
+        echo "Air quality is very unhealthy. Avoid all outdoor exertion if possible. If you must be outside, wear an N95 respirator mask.";
+    } else {
+        echo "Air quality is hazardous. Do not go outside without an N95 respirator mask.";
+    }
+}
+
+if (in_array('Mold', $allergies)) {
+    if ($humidity <= 60) {
+        echo "Mold levels are low. You can safely spend time indoors or outdoors!";
+    } else if ($humidity <= 70) {
+        echo "Mold levels are moderate. You may want to limit your time outdoors.";
+    } else if ($humidity <= 80) {
+        echo "Mold levels are high. You should try to stay indoors.";
+    } else {
+        echo "Mold levels are very high. You should stay indoors as much as possible.";
+    }
+}
+?>
+
+</div>
+</div>
 </div>
     
   
