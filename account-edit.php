@@ -103,6 +103,10 @@ html, body , .container {
             <input type="text" name="email" value="<?= $row["email"] ?>" class="form-control" style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block" disabled>
         </div>
         <div class="form-group">
+            <label for="exampleInputPC" class="form-label mt-4" class="form-label mt-4" style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block">Postcode</label>
+            <input type="text" name="postcode" value="<?= $row["postcode"] ?>" class="form-control" style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block">
+        </div>
+        <div class="form-group">
             <label for="exampleInputPassword1" class="form-label mt-4" class="form-label mt-4" style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block">Change Password</label>
             <input type="text" name="password" value="" class="form-control" style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block" placeholder = "Enter Password">
         </div>
@@ -163,9 +167,13 @@ html, body , .container {
         'Pollen',
         'Dust',
         'Mold',
-        'Pets',
-        'Seafood',
-        'Dairy'
+        'Dogs',
+        'Cats',
+        'Dairy',
+        'Eggs',
+        'Gluten',
+        'Nuts'
+
     );
 
     $allergy_list = explode(',', $user_allergies);
@@ -191,7 +199,15 @@ html, body , .container {
   <div class="mis1"></div>
 
   <div class="navb">
-    <?php require dirname(__FILE__). "/templates/nav.php"; ?>
+    <?php require dirname(__FILE__). "/templates/nav.php"; 
+    if($_SESSION["postcode"] == false){
+        echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>
+        <strong>Oops!!</strong> No Postcode on account!
+        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+        </div>";
+        
+    }
+    ?>
   </div>
   <div class="msic"></div>
   <div class="misc"></div>

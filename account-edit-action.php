@@ -24,14 +24,14 @@ $conn = connect();
 $hash = $_POST["password"];
 $hash = password_hash($hash, PASSWORD_DEFAULT);
 $name_clean = strip_tags($_POST["name"], '<br>');
-$query = "UPDATE users SET name=?, password=? WHERE id=?";
+$query = "UPDATE users SET name=?, password=? ,postcode=? WHERE id=?";
 $stmt = $conn->prepare($query);
-$stmt->bind_param("ssi", $name_clean, $hash, $_POST["id"]);
+$stmt->bind_param("sssi", $name_clean, $hash, $_POST["postcode"], $_POST["id"]);
 $stmt->execute();
 
 $_SESSION["updated"] = true;
 
-header ("Location: /projects/Bookface/account.php");
+header ("Location: /projects/Bookface/account-edit.php");
 
 ?>
 
