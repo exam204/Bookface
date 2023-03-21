@@ -26,6 +26,7 @@ session_start();
     }
     ?>
 
+    <h1 style="margin-top: 1%; margin-left: auto; margin-right: auto; width: 20%; display:block"> Welcome Back </h1>
 
     <form action="login-action.php" method="post">
         <div class="form-group">
