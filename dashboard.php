@@ -454,9 +454,30 @@ html, body , .container {
 
   // no allergies, provide general health advice
   echo "<h1> Health Advice </h1>";
-  if ($aqi <= 10) {
+  if ($aqi <=10){
+      if ($weather == 'Clear' || $weather == 'Partly Cloudy' || $weather == "Cloudy" ||$weather == 'Overcast') {
+        if ($temperature >= 10 || $temperature <= 15 && $humidity <= 60) {
+            echo "Air quality is great. Enjoy outdoor activities! Stay Hydrated!";
+        } else if ($temperature < 8) {
+            echo "Air quality is great. Bundle up and enjoy the fresh air! Stay Hydrated!";
+        } else if ($weather == 'Rain') {
+            echo "Air quality is good. If you need to go outside, remember to bring an umbrella!";
+        } else if ($weather == 'Thunderstorm') {
+            echo "Air quality is moderate. If you need to go outside, remember to bring an umbrella!";
+        } else if ($weather == 'Snow') {
+            echo "Air quality is moderate. If you need to go outside, remember to bring an umbrella!";
+        } else if ($weather == 'Mist') {
+            echo "Air quality is moderate. If you need to go outside, remember to bring an umbrella!";
+        } else {
+          echo "Air quality is great. Be sure to stay hydrated!";
+        }
+      }
+  }
+  else if ($aqi >= 10) {
       if($allergies == " "){
         echo "Air quality is good. Enjoy outdoor activities! Stay Hydrated!";
+      } else {
+        echo "Air quality is good. Enjoy outdoor activities! Stay Hydrated! Be sure to take your allergy medication!";
       }
   } else if ($aqi <= 50) {
       if ($weather == 'Clear' || $weather == 'Partly Cloudy' || $weather == 'Overcast') {
