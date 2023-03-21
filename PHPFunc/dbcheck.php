@@ -3,8 +3,6 @@
 include_once dirname(__FILE__)."/db-connect.php";
 
 function dbcheck(){
-    //session_start();
-
     $conn = connect();
     $query = "SELECT * FROM users WHERE email = ?";
     $stmt = $conn->prepare($query);
@@ -12,9 +10,13 @@ function dbcheck(){
     $stmt->execute();
     $result = $stmt->get_result();
     $email = $result->fetch_assoc();
-    if($email){
+
+    if ($email) {
         $_SESSION["emailverify"] = true;
-    }else{}
+    } else {
+        $_SESSION["emailverify"] = false;
+        $_SESSION["emailalert"] = false;
+    }
 }
 
 function dbchecklogin(){
@@ -50,9 +52,13 @@ function getuserspc(){
     if ($num == 1){
         while($row = mysqli_fetch_assoc($result)){
             $postcode = $row["postcode"];
+            $_SESSION["postcode"] = $postcode;
         }
     }
-    $_SESSION["postcode"] = $postcode;
+    else{
+        $_SESSION["postcode"] = false;
+    }
+    
 
 }
 

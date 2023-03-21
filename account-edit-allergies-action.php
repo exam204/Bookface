@@ -19,21 +19,31 @@ session_start()
     
 <?php
 
+session_start();
+if(!isset($_SESSION["userid"])){
+    header("location: login.php");
+    exit;
+}
 
+if ($_POST['allergies'] == null){
+	$allergies = " ";
+}
+else{
+	$allergies = implode(',', $_POST['allergies']);
+}
+
+// update user allergies
+$user_id = $_SESSION["userid"];
 $conn = connect();
-$hash = $_POST["password"];
-$hash = password_hash($hash, PASSWORD_DEFAULT);
-$name_clean = strip_tags($_POST["name"], '<br>');
-$query = "UPDATE users SET name=?, password=? ,postcode=? WHERE id=?";
+$query = "UPDATE users SET allergies = ? WHERE id = ?";
 $stmt = $conn->prepare($query);
-$stmt->bind_param("sssi", $name_clean, $hash, $_POST["postcode"], $_POST["id"]);
+$stmt->bind_param("si", $allergies, $user_id);
 $stmt->execute();
+header("location: account-edit.php");
 
-$_SESSION["updated"] = true;
-
-header ("Location: /projects/Bookface/account-edit.php");
 
 ?>
+
 
 
 

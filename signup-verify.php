@@ -17,7 +17,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Verify</title>
     <?php require dirname(__FILE__). "/Style/links.php"; ?>
     <?php require dirname(__FILE__). "/PHPFunc/db-connect.php";?>
     <?php require dirname(__FILE__). "/PHPFunc/dbcheck.php";?>
@@ -37,7 +37,16 @@
 
     $_SESSION["visited-verify"] = true;
 
-    emailauth();
+    if(isset($_SESSION["visited-verify"])){
+        if(isset($_SESSION["emailuser"])){
+            emailauth();
+        }
+        
+    }
+    else{
+        //do nothing
+    }
+    
 
 ?>
     <?php echo $_SESSION["authnumber"]?>
@@ -65,13 +74,13 @@
         $mail->isSMTP();                                            //Send using SMTP
         $mail->Host       = 'smtp.outlook.com';                     //Set the SMTP server to send through
         $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-        $mail->Username   = 'bookfaceauth@outlook.com';                     //SMTP username
-        $mail->Password   = 'LocalHost#123';                               //SMTP password
+        $mail->Username   = 'hagauth@outlook.com';                     //SMTP username
+        $mail->Password   = 'HealthAdviceGroup123#';                               //SMTP password
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;            //Enable implicit TLS encryption
         $mail->Port       = 587;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
         //Recipients
-        $mail->setFrom('bookfaceauth@outlook.com', 'BookFace');
+        $mail->setFrom('hagauth@outlook.com', 'Health Advice Group');
         $mail->addAddress($_SESSION["emailauth"], $_SESSION["nameauth"]);     //Add a recipient
 
 

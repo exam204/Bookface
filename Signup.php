@@ -17,12 +17,14 @@ session_start();
     <?php require dirname(__FILE__). "/templates/nav.php"; ?>
 
     <?php
-    if(isset($_SESSION["emailverify"])){
-        echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>
-        <strong>Oops!!</strong> Email already exists!
-        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
-        </div>";
-        unset($_SESSION["emailverify"]);
+    if(isset($_SESSION["emailalert"])){
+        if($_SESSION["emailverify"] == false){
+            echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>
+            <strong>Oops!!</strong> Email already exists!
+            <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+            </div>";
+        }
+        unset($_SESSION["emailalert"]);
     }
     
     ?>

@@ -21,13 +21,20 @@ session_start();
 <?php
     if(isset($_POST["email"])){
         dbcheck();
-        $_SESSION["email"] = $_POST["email"];
-        $_SESSION["emailauth"] = $_POST["email"];
-        $_SESSION["password"] = $_POST["password"];
-        $_SESSION["name"] = $_POST["name"];
-        $_SESSION["nameauth"] = $_POST["name"];
-        header ("Location: /projects/Bookface/signup-verify.php");
+        if ($_SESSION["emailverify"] == false){
+            $_SESSION["email"] = $_POST["email"];
+            $_SESSION["emailauth"] = $_POST["email"];
+            $_SESSION["password"] = $_POST["password"];
+            $_SESSION["name"] = $_POST["name"];
+            $_SESSION["nameauth"] = $_POST["name"];
+            $_SESSION["emailuser"] = true;
+            header ("Location: /projects/Bookface/signup-verify.php");
+        }else{
+            $_SESSION["emailverify"] = false;
+            header ("Location: /projects/Bookface/signup.php");
+        }
     }
+    
     if(isset($_SESSION["visited-verify"])){
         if($_POST["enterauth"] == $_SESSION["authnumber"]){
             addtodb();
@@ -36,6 +43,7 @@ session_start();
         }
         else{
             $_SESSION["wrong_auth"] = true;
+            unset($_SESSION["emailuser"]);
             header ("Location: /projects/Bookface/signup-verify.php");
         }
     }

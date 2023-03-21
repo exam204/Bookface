@@ -24,7 +24,6 @@ session_start()
     dbchecklogin();
     check_admin();
     getuserspc();
-    $_SESSION["signup"] = true;
     $_SESSION["loggedin"] = true;
 
 ?>
