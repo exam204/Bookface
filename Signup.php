@@ -47,7 +47,7 @@ html, body , .container {
 /* For presentation only, no need to copy the code below */
 
 .container * {
-  border: 1px solid red;
+  /*border: 1px solid red;*/
   position: relative;
 }
 
@@ -95,28 +95,28 @@ html, body , .container {
   <div class="main">
   <form action="signup-action.php" method="post">
       <div class="form-group">
-        <label for="firstName" style="margin-top: 1%; margin-left: auto; margin-right: auto; ">First Name</label>
-        <input type="text" class="form-control" id="firstName" name="fname" style="margin-top: 1%; margin-left: auto; margin-right: auto; " required>
+        <label for="firstName" style="margin-top: 1%;  margin-left: auto; width: 80%; display:block; margin-right: auto; ">First Name</label>
+        <input type="text" class="form-control" id="firstName" name="fname" style="margin-top: 1%;  margin-left: auto; width: 80%; display:block; margin-right: auto; " required>
       </div>
       <div class="form-group">
-        <label for="lastName" style="margin-top: 1%; margin-left: auto; margin-right: auto; ">Last Name</label>
-        <input type="text" class="form-control" id="lastName" name="lname" style="margin-top: 1%; margin-left: auto; margin-right: auto; "  required>
+        <label for="lastName" style="margin-top: 1%;  margin-left: auto; width: 80%; display:block;margin-right: auto; ">Last Name</label>
+        <input type="text" class="form-control" id="lastName" name="lname" style="margin-top: 1%;  margin-left: auto; width: 80%; display:block;margin-right: auto; "  required>
       </div>
       <div class="form-group">
-        <label for="username" style="margin-top: 1%; margin-left: auto; margin-right: auto; ">Username</label>
-        <input type="text" class="form-control" id="uname" name="uname" style="margin-top: 1%; margin-left: auto; margin-right: auto; "  required>
+        <label for="username" style="margin-top: 1%;  margin-left: auto; width: 80%; display:block;margin-right: auto; ">Username</label>
+        <input type="text" class="form-control" id="uname" name="uname" style="margin-top: 1%;  margin-left: auto; width: 80%; display:block;margin-right: auto; "  required>
       </div>
       <div class="form-group">
-        <label for="email" style="margin-top: 1%; margin-left: auto; margin-right: auto; ">Email</label>
-        <input type="email" class="form-control" id="email" name="email" style="margin-top: 1%; margin-left: auto; margin-right: auto; " required>
+        <label for="email" style="margin-top: 1%;  margin-left: auto; width: 80%; display:block;margin-right: auto; ">Email</label>
+        <input type="email" class="form-control" id="email" name="email" style="margin-top: 1%;  margin-left: auto; width: 80%; display:block;margin-right: auto; " required>
       </div>
       <div class="form-group">
-        <label for="dateOfBirth" style="margin-top: 1%; margin-left: auto; margin-right: auto;">Date of Birth</label>
-        <input type="date" class="form-control" id="dateOfBirth" name="dob" style="margin-top: 1%; margin-left: auto; margin-right: auto; " required>
+        <label for="dateOfBirth" style="margin-top: 1%;  margin-left: auto; width: 80%; display:block;margin-right: auto;">Date of Birth</label>
+        <input type="date" class="form-control" id="dateOfBirth" name="dob" style="margin-top: 1%;  margin-left: auto; width: 80%; display:block;margin-right: auto; " required>
       </div>
       <div class="form-group">
-        <label for="gender" style="margin-top: 1%; margin-left: auto; margin-right: auto; ">Gender</label>
-        <select class="form-control" id="gender" name="gender" style="margin-top: 1%; margin-left: auto; margin-right: auto; " required>
+        <label for="gender" style="margin-top: 1%;  margin-left: auto; width: 80%; display:block;margin-right: auto; ">Gender</label>
+        <select class="form-control" id="gender" name="gender" style="margin-top: 1%;  margin-left: auto; width: 80%; display:block;margin-right: auto; " required>
           <option value="">-- Select Gender --</option>
           <option value="male">Male</option>
           <option value="female">Female</option>
@@ -124,19 +124,30 @@ html, body , .container {
         </select>
       </div>
       <div class="form-group">
-        <label for="location" style="margin-top: 1%; margin-left: auto; margin-right: auto; ">Location</label>
-        <input type="text" class="form-control" id="location" name="location" style="margin-top: 1%; margin-left: auto; margin-right: auto; " required>
+        <label for="location" style="margin-top: 1%;  margin-left: auto; width: 80%; display:block;margin-right: auto; ">Location</label>
+        <input type="text" class="form-control" id="location" name="location" style="margin-top: 1%;  margin-left: auto; width: 80%; display:block;margin-right: auto; " required>
       </div>
       <div class="form-group">
-        <label for="healthConditions" style="margin-top: 1%; margin-left: auto; margin-right: auto; ">Health Conditions</label>
-        <textarea class="form-control" id="healthConditions" placeholder="If you have none leave blank" name="healthcon" rows="3"  ></textarea>
+        <label for="healthConditions" style="margin-top: 1%;  margin-left: auto; width: 80%; display:block;margin-right: auto; ">Health Conditions</label>
+        <textarea class="form-control" id="healthConditions" placeholder="If you have none leave blank" style="margin-top: 1%;  margin-left: auto; width: 80%; display:block;margin-right: auto; " name="healthcon" rows="3"  ></textarea>
       </div>
       
   </div>
   <!-- Adds -->
   <div class="adds">
+    <style>
+        .adds{
+            height: 100%;
+            width: 80%;
+            margin-top: 1%;
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+            border-radius: 10px;
+        }
+        </style>
     <?php
-
+    
     $allergies = array(
         'Pollen',
         'Dust',
@@ -159,19 +170,36 @@ if(isset($_SESSION["pass-match"])){
 }
 ?>
 <div class="form-group">
-    <label for="password" style="margin-top: 1%; margin-left: auto; margin-right: auto; ">Password</label>
-    <input type="password" class="form-control" id="myInput" name="password" style="margin-top: 1%; margin-left: auto; margin-right: auto; "  required>
+    <label for="password" >Password</label>
+    <input type="password" class="form-control" id="myInput1" name="password" onkeyup='check();'  />
 </div>
 <div class="form-group">
-    <label for="password-verify" style="margin-top: 1%; margin-left: auto; margin-right: auto; ">Password</label>
-    <input type="password" class="form-control" id="myInput" name="password-verify" style="margin-top: 1%; margin-left: auto; margin-right: auto; "  required>
+    <label for="password-verify" >Password</label>
+    <input type="password" class="form-control" id="myInput" name="password-verify" id="confirm_password"  onkeyup='check();' />
+    <span id='message'></span> <br>
     <input type="checkbox" onclick="myFunction()">Show Password
 </div>
 
-
 <script>
+var check = function() {
+  if (document.getElementById('myInput1').value ==
+    document.getElementById('myInput').value) {
+    document.getElementById('message').style.color = 'green';
+    document.getElementById('message').innerHTML = 'Matching';
+  } else {
+    document.getElementById('message').style.color = 'red';
+    document.getElementById('message').innerHTML = 'Not Matching';
+  }
+}
+    
 function myFunction() {
   var x = document.getElementById("myInput");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+  var x = document.getElementById("myInput1");
   if (x.type === "password") {
     x.type = "text";
   } else {
@@ -181,7 +209,7 @@ function myFunction() {
 </script>
 
 <div class="form-group">
-    <span class ="primary form-control" style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block; text-align: center"> Edit Allergies </span>
+    <span class ="primary form-control" style="text-align: center"> Edit Allergies </span>
 </div>
 
 <?php foreach ($allergies as $allergy) : ?>
@@ -195,7 +223,7 @@ function myFunction() {
 <?php endforeach; ?>
 
 <div class="form-group">
-    <input type="submit" value="Sign Up" class="btn btn-primary form-control" style="margin-top: 1%; margin-left: auto; margin-right: auto; display:block"></input>
+    <input type="submit" value="Sign Up" class="btn btn-primary form-control" ></input>
 </div>
 
 </form>

@@ -33,7 +33,7 @@ $row = $result->fetch_assoc();
 <style>
 .container {  display: grid;
   grid-template-columns: 1.5fr 0.9fr 1fr 1fr 0.9fr 1.5fr;
-  grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 5fr 1fr 1fr;
   gap: 5% 5%;
   grid-auto-flow: row;
   grid-template-areas:
@@ -97,6 +97,14 @@ html, body , .container {
         <div class="form-group">
         <label for="exampleInputName" class="form-label mt-4" class="form-label mt-4" style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block">Name</label>
             <input type="text" name="name" value="<?= $row["name"]  ?>" class="form-control" style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block" required>
+        </div>
+        <div class="form-group">
+        <label for="exampleInputLName" class="form-label mt-4" class="form-label mt-4" style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block">Last Name</label>
+            <input type="text" name="lname" value="<?= $row["lname"]  ?>" class="form-control" style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block" required>
+        </div>
+        <div class="form-group">
+        <label for="exampleInputUName" class="form-label mt-4" class="form-label mt-4" style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block">Name</label>
+            <input type="text" name="uname" value="<?= $row["uname"]  ?>" class="form-control" style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block" required>
         </div>
         <div class="form-group">
             <label for="exampleInputEmail1" class="form-label mt-4" class="form-label mt-4" style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block">Email address</label>
@@ -179,6 +187,31 @@ html, body , .container {
     $allergy_list = explode(',', $user_allergies);
 
     ?>
+    <div class="form-group">
+        <span class ="primary form-control" style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block; text-align: center"> Edit Details </span>
+    </div>
+    <div class="form-group">
+        <label for="exampleInputPC" class="form-label mt-4" class="form-label mt-4" style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block">Date Of Birth</label>
+        <input type="text" name="dob" value="<?= $row["dob"] ?>" class="form-control" style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block">
+    </div>
+    <div class="form-group">
+        <label for="exampleInputPC" class="form-label mt-4" class="form-label mt-4" style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block">Postcode</label>
+        <input type="text" name="postcode" value="<?= $row["postcode"] ?>" class="form-control" style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block">
+    </div>
+    <div class="form-group">
+        <label for="exampleInputPC" class="form-label mt-4" class="form-label mt-4" style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block">Postcode</label>
+        <input type="text" name="postcode" value="<?= $row["gender"] ?>" class="form-control" style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block">
+    </div>
+    <div class="form-group">
+        <label for="gender" style="margin-top: 1%;  margin-left: auto; width: 80%; display:block;margin-right: auto; ">Gender</label>
+        <select class="form-control" value="<?= $row["gender"] ?>" id="gender" name="gender"  required>
+          <option value="">-- Select Gender --</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+
     <div class="form-group">
         <span class ="primary form-control" style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block; text-align: center"> Edit Allergies </span>
     </div>

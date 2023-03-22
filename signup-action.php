@@ -19,8 +19,11 @@ session_start();
 
 
 <?php
-$_SESSION["password-verify"] = $_POST["password-verify"];
-$_SESSION["password"] = $_POST["password"];
+if (isset($_POST["password"])){
+    $_SESSION["password-verify"] = $_POST["password-verify"];
+    $_SESSION["password"] = $_POST["password"];
+}
+
 
 if ($_SESSION["password"] == $_SESSION["password-verify"]){
     if(isset($_POST["email"])){
@@ -35,9 +38,9 @@ if ($_SESSION["password"] == $_SESSION["password-verify"]){
             $_SESSION["gender"]= $_POST["gender"];
             $_SESSION["location"] = $_POST["location"];
             $_SESSION["healthcon"] = $_POST["healthcon"];
-            $_SESSOIN["allergies"] = $_POST["allergies"];
+            $_SESSION["allergies"] = $_POST["allergies"];
             $_SESSION["emailuser"] = true;
-            $_SESSOIN["nameauth"] = $_POST["fname"];
+            $_SESSION["nameauth"] = $_POST["fname"];
             header ("Location: /projects/Bookface/signup-verify.php");
         }else{
             $_SESSION["emailverify"] = false;
@@ -61,22 +64,19 @@ if ($_SESSION["password"] == $_SESSION["password-verify"]){
             header ("Location: /projects/Bookface/signup-verify.php");
         }
     }
-
-    
-    
-    
-    //require dirname(__FILE__). "/PHPFunc/db-connect.php";
-
-    
-    
-
-    
-    
     ?>
 
 <?php
 
 function addtodb(){
+    if($_SESSION["allergies"] == ""){
+        $_SESSION["allergies"] = " ";
+    }else if($_SESSION["healthcon"] == ""){
+        $_SESSION["healthcon"] = " ";
+    }
+    //$dob = $_SESSION["dob"];
+    //$dob = date("Y-m-d", strtotime($dob));
+    $dob = 2005-01-01;
     $conn = connect();
     $hash = $_SESSION["password"];
     $hash = password_hash($hash, PASSWORD_DEFAULT);
@@ -85,7 +85,7 @@ function addtodb(){
     $ft_signup = "0";
     $query = "INSERT INTO users (name, lname, uname, email, dob, gender, postcode, healthcon, password, allergies, ft) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
     $stmt = $conn->prepare($query);
-    $stmt->bind_param("sssssssssss", $fname_clean, $lname_clean, $_SESSION["uname"], $_SESSION["email"], $_SESSION["dob"], $_SESSION["gender"], $_SESSION["postcode"], $_SESSION["healthcon"], $hash, $_SESSION["allergies"], $ft_signup);
+    $stmt->bind_param("ssssissssss", $fname_clean, $lname_clean, $_SESSION["uname"], $_SESSION["email"], $dob, $_SESSION["gender"], $_SESSION["location"], $_SESSION["healthcon"], $hash, $_SESSION["allergies"], $ft_signup);
     $stmt->execute();
     $_SESSION["signup"] = true;
     //header ("Location: Index.php");
