@@ -104,7 +104,7 @@ html, body , .container {
       </div>
       <div class="form-group">
         <label for="username" style="margin-top: 1%; margin-left: auto; margin-right: auto; ">Username</label>
-        <input type="text" class="form-control" id="username" name="uname" style="margin-top: 1%; margin-left: auto; margin-right: auto; "  required>
+        <input type="text" class="form-control" id="uname" name="uname" style="margin-top: 1%; margin-left: auto; margin-right: auto; "  required>
       </div>
       <div class="form-group">
         <label for="email" style="margin-top: 1%; margin-left: auto; margin-right: auto; ">Email</label>
@@ -129,7 +129,7 @@ html, body , .container {
       </div>
       <div class="form-group">
         <label for="healthConditions" style="margin-top: 1%; margin-left: auto; margin-right: auto; ">Health Conditions</label>
-        <textarea class="form-control" id="healthConditions" placeholder="If you have none leave blank" name="healthConditions" rows="3"  ></textarea>
+        <textarea class="form-control" id="healthConditions" placeholder="If you have none leave blank" name="healthcon" rows="3"  ></textarea>
       </div>
       
   </div>
@@ -149,8 +149,15 @@ html, body , .container {
         'Nuts'
     );
 
-?>
 
+if(isset($_SESSION["pass-match"])){
+    echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>
+    <strong>Oops!!</strong> Passwords do not match!
+    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+    </div>";
+    unset($_SESSION["pass-match"]);
+}
+?>
 <div class="form-group">
     <label for="password" style="margin-top: 1%; margin-left: auto; margin-right: auto; ">Password</label>
     <input type="password" class="form-control" id="myInput" name="password" style="margin-top: 1%; margin-left: auto; margin-right: auto; "  required>
