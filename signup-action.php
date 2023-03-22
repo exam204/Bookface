@@ -22,11 +22,18 @@ session_start();
     if(isset($_POST["email"])){
         dbcheck();
         if ($_SESSION["emailverify"] == false){
+            $_SESSION["fname"] = $_POST["fname"];
+            $_SESSION["lname"] = $_POST["lname"];
+            $_SESSOIN["uname"] = $_POST["uname"];
             $_SESSION["email"] = $_POST["email"];
             $_SESSION["emailauth"] = $_POST["email"];
+            $_SESSION["dob"] = $_POST["dob"];
+            $_SESSION["gender"]= $_POST["gender"];
+            $_SESSION["location"] = $_POST["location"];
+            $_SESSION["healthcon"] = $_POST["healthcon"];
+            $_SESSOIN["allergies"] = $_POST["allergies"];
             $_SESSION["password"] = $_POST["password"];
-            $_SESSION["name"] = $_POST["name"];
-            $_SESSION["nameauth"] = $_POST["name"];
+            
             $_SESSION["emailuser"] = true;
             header ("Location: /projects/Bookface/signup-verify.php");
         }else{
@@ -68,9 +75,9 @@ function addtodb(){
     $hash = password_hash($hash, PASSWORD_DEFAULT);
     $name_clean = strip_tags($_SESSION["name"], '<br>');
     $ft_signup = "0";
-    $query = "INSERT INTO users (name, email, password, ft) VALUES (?,?,?,?)";
+    $query = "INSERT INTO users (name, lname, uname, email, dob, gender, postcode, healthcon, password, allergies, ft) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
     $stmt = $conn->prepare($query);
-    $stmt->bind_param("ssss", $name_clean, $_SESSION["email"], $hash, $ft_signup);
+    $stmt->bind_param("sssssssssss", $name_clean, $_SESSION["lname"], $_SESSION["uname"], $_SESSION["email"], $_SESSION["dob"], $_SESSION["gender"], $_SESSION["postcode"], $_SESSION["healthcon"], $hash, $_SESSION["allergies"], $ft_signup);
     $stmt->execute();
     $_SESSION["signup"] = true;
     //header ("Location: Index.php");

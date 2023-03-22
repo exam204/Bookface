@@ -20,9 +20,9 @@ session_start();
   grid-auto-flow: row;
   grid-template-areas:
     "navb navb navb navb navb navb"
-    "msic main main main main misc"
-    "msic main main main main misc"
-    "msic main main main main misc"
+    "msic main main adds adds misc"
+    "msic main main adds adds misc"
+    "msic main main adds adds misc"
     "msic mis1 mis1 mis1 mis1 misc";
 }
 
@@ -35,6 +35,8 @@ session_start();
 .misc { grid-area: misc; }
 
 .main { grid-area: main; }
+
+.adds { grid-area: adds; }
 
 
 html, body , .container {
@@ -50,7 +52,6 @@ html, body , .container {
 }
 
 .container *:after {
-  /*content:attr(class);*/
   position: absolute;
   top: 0;
   left: 0;
@@ -61,50 +62,61 @@ html, body , .container {
   justify-content: center;
 }
 
+
+
 </style>
 
 </head>
 <body>
-    
 
-    <div class="container">
-        <div class="navb">
-            <?php require dirname(__FILE__). "/templates/nav.php"; ?>
-            <?php
-            if(isset($_SESSION["emailalert"])){
-                if($_SESSION["emailverify"] == false){
-                    echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>
-                    <strong>Oops!!</strong> Email already exists!
-                    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
-                    </div>";
-                }
-                unset($_SESSION["emailalert"]);
+
+<div class="container">
+  <div class="mis1"></div>
+
+  <!-- Nav Bar -->
+  <div class="navb">
+  <?php require dirname(__FILE__). "/templates/nav.php"; ?>
+        <?php
+        if(isset($_SESSION["emailalert"])){
+            if($_SESSION["emailverify"] == false){
+                echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>
+                <strong>Oops!!</strong> Email already exists!
+                <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                </div>";
             }
-            ?>
-        </div>
-    <div class="main">
-    <div class="container">
-    <h1>Registration Form</h1>
-    <form>
+            unset($_SESSION["emailalert"]);
+        }
+        ?>
+  </div>
+    <!-- Misc -->
+  <div class="msic"></div>
+  <div class="misc"></div>
+    <!-- Main -->
+  <div class="main">
+  <form action="signup-action.php" method="post">
       <div class="form-group">
-        <label for="firstName">First Name</label>
-        <input type="text" class="form-control" id="firstName" name="firstName" required>
+        <label for="firstName" style="margin-top: 1%; margin-left: auto; margin-right: auto; ">First Name</label>
+        <input type="text" class="form-control" id="firstName" name="fname" style="margin-top: 1%; margin-left: auto; margin-right: auto; " required>
       </div>
       <div class="form-group">
-        <label for="lastName">Last Name</label>
-        <input type="text" class="form-control" id="lastName" name="lastName" required>
+        <label for="lastName" style="margin-top: 1%; margin-left: auto; margin-right: auto; ">Last Name</label>
+        <input type="text" class="form-control" id="lastName" name="lname" style="margin-top: 1%; margin-left: auto; margin-right: auto; "  required>
       </div>
       <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" class="form-control" id="email" name="email" required>
+        <label for="username" style="margin-top: 1%; margin-left: auto; margin-right: auto; ">Username</label>
+        <input type="text" class="form-control" id="username" name="uname" style="margin-top: 1%; margin-left: auto; margin-right: auto; "  required>
       </div>
       <div class="form-group">
-        <label for="dateOfBirth">Date of Birth</label>
-        <input type="date" class="form-control" id="dateOfBirth" name="dateOfBirth" required>
+        <label for="email" style="margin-top: 1%; margin-left: auto; margin-right: auto; ">Email</label>
+        <input type="email" class="form-control" id="email" name="email" style="margin-top: 1%; margin-left: auto; margin-right: auto; " required>
       </div>
       <div class="form-group">
-        <label for="gender">Gender</label>
-        <select class="form-control" id="gender" name="gender" required>
+        <label for="dateOfBirth" style="margin-top: 1%; margin-left: auto; margin-right: auto;">Date of Birth</label>
+        <input type="date" class="form-control" id="dateOfBirth" name="dob" style="margin-top: 1%; margin-left: auto; margin-right: auto; " required>
+      </div>
+      <div class="form-group">
+        <label for="gender" style="margin-top: 1%; margin-left: auto; margin-right: auto; ">Gender</label>
+        <select class="form-control" id="gender" name="gender" style="margin-top: 1%; margin-left: auto; margin-right: auto; " required>
           <option value="">-- Select Gender --</option>
           <option value="male">Male</option>
           <option value="female">Female</option>
@@ -112,26 +124,77 @@ html, body , .container {
         </select>
       </div>
       <div class="form-group">
-        <label for="location">Location</label>
-        <input type="text" class="form-control" id="location" name="location" required>
+        <label for="location" style="margin-top: 1%; margin-left: auto; margin-right: auto; ">Location</label>
+        <input type="text" class="form-control" id="location" name="location" style="margin-top: 1%; margin-left: auto; margin-right: auto; " required>
       </div>
       <div class="form-group">
-        <label for="healthConditions">Health Conditions</label>
-        <textarea class="form-control" id="healthConditions" name="healthConditions" rows="3"></textarea>
+        <label for="healthConditions" style="margin-top: 1%; margin-left: auto; margin-right: auto; ">Health Conditions</label>
+        <textarea class="form-control" id="healthConditions" placeholder="If you have none leave blank" name="healthConditions" rows="3"  ></textarea>
       </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
+      
+  </div>
+  <!-- Adds -->
+  <div class="adds">
+    <?php
+
+    $allergies = array(
+        'Pollen',
+        'Dust',
+        'Mold',
+        'Dogs',
+        'Cats',
+        'Dairy',
+        'Eggs',
+        'Gluten',
+        'Nuts'
+    );
+
+?>
+
+<div class="form-group">
+    <label for="password" style="margin-top: 1%; margin-left: auto; margin-right: auto; ">Password</label>
+    <input type="password" class="form-control" id="myInput" name="password" style="margin-top: 1%; margin-left: auto; margin-right: auto; "  required>
+</div>
+<div class="form-group">
+    <label for="password-verify" style="margin-top: 1%; margin-left: auto; margin-right: auto; ">Password</label>
+    <input type="password" class="form-control" id="myInput" name="password-verify" style="margin-top: 1%; margin-left: auto; margin-right: auto; "  required>
+    <input type="checkbox" onclick="myFunction()">Show Password
+</div>
+
+
+<script>
+function myFunction() {
+  var x = document.getElementById("myInput");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+}
+</script>
+
+<div class="form-group">
+    <span class ="primary form-control" style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block; text-align: center"> Edit Allergies </span>
+</div>
+
+<?php foreach ($allergies as $allergy) : ?>
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="allergies[]" value="<?= $allergy ?>"
+            id="<?= $allergy ?>">
+        <label class="form-check-label" for="<?= $allergy ?>" >
+            <?= $allergy ?>
+        </label>
     </div>
+<?php endforeach; ?>
 
-        
+<div class="form-group">
+    <input type="submit" value="Sign Up" class="btn btn-primary form-control" style="margin-top: 1%; margin-left: auto; margin-right: auto; display:block"></input>
+</div>
 
-        <div class="mis1"></div>
-        <div class="msic"></div>
-        <div class="misc"></div>
-    </div>
+</form>
+</div>
 
 
-    
-    
     
 </body>
 </html>
