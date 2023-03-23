@@ -66,10 +66,10 @@ function get_ft($userid){
 <div id="messages" class="col-sm-4 tp-5 mx-auto">
 <?php
         $conn = connect();
-        $sql = "SELECT messages.id AS msg_id, name, message, date, userid FROM messages LEFT JOIN users ON messages.userid = users.id ORDER BY messages.id DESC"; 
+        $sql = "SELECT messages.id AS msg_id, uname, message, date, userid FROM messages LEFT JOIN users ON messages.userid = users.id ORDER BY messages.id DESC"; 
         $result = mysqli_query($conn, $sql);
         while($row = mysqli_fetch_assoc($result)){
-            $name = $row['name'];
+            $name = $row['uname'];
             $message = $row['message'];
             $date = $row['date'];
             if(substr($date,0,10) == date("Y-m-d")){

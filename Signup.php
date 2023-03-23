@@ -103,12 +103,12 @@ html, body , .container {
         <input type="text" class="form-control" id="lastName" name="lname" style="margin-top: 1%;  margin-left: auto; width: 80%; display:block;margin-right: auto; "  required>
       </div>
       <div class="form-group">
-        <label for="username" style="margin-top: 1%;  margin-left: auto; width: 80%; display:block;margin-right: auto; ">Username</label>
-        <input type="text" class="form-control" id="uname" name="uname" style="margin-top: 1%;  margin-left: auto; width: 80%; display:block;margin-right: auto; "  required>
-      </div>
-      <div class="form-group">
         <label for="email" style="margin-top: 1%;  margin-left: auto; width: 80%; display:block;margin-right: auto; ">Email</label>
         <input type="email" class="form-control" id="email" name="email" style="margin-top: 1%;  margin-left: auto; width: 80%; display:block;margin-right: auto; " required>
+      </div>
+      <div class="form-group">
+        <label for="username" style="margin-top: 1%;  margin-left: auto; width: 80%; display:block;margin-right: auto; ">Username</label>
+        <input type="text" class="form-control" id="uname" name="uname" style="margin-top: 1%;  margin-left: auto; width: 80%; display:block;margin-right: auto; "  required>
       </div>
       <div class="form-group">
         <label for="dateOfBirth" style="margin-top: 1%;  margin-left: auto; width: 80%; display:block;margin-right: auto;">Date of Birth</label>
@@ -159,8 +159,23 @@ html, body , .container {
         'Gluten',
         'Nuts'
     );
+?>
 
+<div class="form-group">
+    <span class ="primary form-control" style="text-align: center"> Allergies </span>
+</div>
 
+<?php foreach ($allergies as $allergy) : ?>
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="allergies[]" value="<?= $allergy ?>"
+            id="<?= $allergy ?>">
+        <label class="form-check-label" for="<?= $allergy ?>" >
+            <?= $allergy ?>
+        </label>
+    </div>
+<?php endforeach; ?>
+
+<?php
 if(isset($_SESSION["pass-match"])){
     echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>
     <strong>Oops!!</strong> Passwords do not match!
@@ -209,27 +224,15 @@ function myFunction() {
 </script>
 
 <div class="form-group">
-    <span class ="primary form-control" style="text-align: center"> Edit Allergies </span>
-</div>
-
-<?php foreach ($allergies as $allergy) : ?>
-    <div class="form-check">
-        <input class="form-check-input" type="checkbox" name="allergies[]" value="<?= $allergy ?>"
-            id="<?= $allergy ?>">
-        <label class="form-check-label" for="<?= $allergy ?>" >
-            <?= $allergy ?>
-        </label>
-    </div>
-<?php endforeach; ?>
-
-<div class="form-group">
     <input type="submit" value="Sign Up" class="btn btn-primary form-control" ></input>
 </div>
-
 </form>
+
+<div class="form-group">
+    <a href="login.php" class="btn btn-primary form-control" style="margin-top: 1%; margin-left: auto; margin-right: auto;  display:block">Already Got An Account?</a>
 </div>
 
-
+</div>
     
 </body>
 </html>

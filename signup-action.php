@@ -85,7 +85,7 @@ function addtodb(){
     $ft_signup = "0";
     $query = "INSERT INTO users (name, lname, uname, email, dob, gender, postcode, healthcon, password, allergies, ft) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
     $stmt = $conn->prepare($query);
-    $stmt->bind_param("ssssissssss", $fname_clean, $lname_clean, $_SESSION["uname"], $_SESSION["email"], $dob, $_SESSION["gender"], $_SESSION["location"], $_SESSION["healthcon"], $hash, $_SESSION["allergies"], $ft_signup);
+    $stmt->bind_param("sssssssssss", $fname_clean, $lname_clean, $_SESSION["uname"], $_SESSION["email"], $dob, $_SESSION["gender"], $_SESSION["location"], $_SESSION["healthcon"], $hash, $_SESSION["allergies"], $ft_signup);
     $stmt->execute();
     $_SESSION["signup"] = true;
     //header ("Location: Index.php");

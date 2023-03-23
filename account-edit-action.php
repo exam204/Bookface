@@ -24,9 +24,11 @@ $conn = connect();
 $hash = $_POST["password"];
 $hash = password_hash($hash, PASSWORD_DEFAULT);
 $name_clean = strip_tags($_POST["name"], '<br>');
-$query = "UPDATE users SET name=?, password=? ,postcode=? WHERE id=?";
+$lname_clean = strip_tags($_POST["lname"], '<br>');
+$uname_clean = strip_tags($_POST["uname"], '<br>');
+$query = "UPDATE users SET name=?, lname=?, uname=?, password=? WHERE id=?";
 $stmt = $conn->prepare($query);
-$stmt->bind_param("sssi", $name_clean, $hash, $_POST["postcode"], $_POST["id"]);
+$stmt->bind_param("ssssi", $name_clean, $lname_clean, $uname_clean, $hash, $_POST["id"]);
 $stmt->execute();
 
 $_SESSION["updated"] = true;

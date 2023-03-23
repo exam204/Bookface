@@ -35,9 +35,9 @@ else{
 // update user allergies
 $user_id = $_SESSION["userid"];
 $conn = connect();
-$query = "UPDATE users SET allergies = ? WHERE id = ?";
+$query = "UPDATE users SET dob=?, postcode=?, gender=?, allergies=? WHERE id = ?";
 $stmt = $conn->prepare($query);
-$stmt->bind_param("si", $allergies, $user_id);
+$stmt->bind_param("ssssi", $_POST["dob"], $_POST["postcode"], $_POST["gender"], $allergies, $user_id);
 $stmt->execute();
 header("location: account-edit.php");
 

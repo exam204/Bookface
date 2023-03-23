@@ -90,7 +90,7 @@ html, body , .container {
 <div class="container">
     <div class="main">
         <div class="form-group">
-            <span class ="primary form-control" style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block; text-align: center"> Edit Details </span>
+            <span class ="primary form-control" style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block; text-align: center"> Edit User Details </span>
         </div>
 
   <form action="account-edit-action.php" method="post">
@@ -103,21 +103,61 @@ html, body , .container {
             <input type="text" name="lname" value="<?= $row["lname"]  ?>" class="form-control" style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block" required>
         </div>
         <div class="form-group">
-        <label for="exampleInputUName" class="form-label mt-4" class="form-label mt-4" style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block">Name</label>
+        <label for="exampleInputUName" class="form-label mt-4" class="form-label mt-4" style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block">Username</label>
             <input type="text" name="uname" value="<?= $row["uname"]  ?>" class="form-control" style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block" required>
         </div>
         <div class="form-group">
             <label for="exampleInputEmail1" class="form-label mt-4" class="form-label mt-4" style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block">Email address</label>
             <input type="text" name="email" value="<?= $row["email"] ?>" class="form-control" style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block" disabled>
         </div>
+        <?php
+        if(isset($_SESSION["pass-match"])){
+        echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>
+        <strong>Oops!!</strong> Passwords do not match!
+        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+        </div>";
+        unset($_SESSION["pass-match"]);
+        }
+        ?>
         <div class="form-group">
-            <label for="exampleInputPC" class="form-label mt-4" class="form-label mt-4" style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block">Postcode</label>
-            <input type="text" name="postcode" value="<?= $row["postcode"] ?>" class="form-control" style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block">
+            <label for="password" style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block">Password</label>
+            <input type="password" style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block" class="form-control" id="myInput1" name="password" onkeyup='check();'  required/>
         </div>
         <div class="form-group">
-            <label for="exampleInputPassword1" class="form-label mt-4" class="form-label mt-4" style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block">Change Password</label>
-            <input type="text" name="password" value="" class="form-control" style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block" placeholder = "Enter Password">
+            <label for="password-verify" style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block">Password</label>
+            <input type="password" style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block" class="form-control" id="myInput" name="password-verify" id="confirm_password"  onkeyup='check();' required/>
+            <span id='message'></span> <br>
+            <input type="checkbox" onclick="myFunction()">Show Password
         </div>
+
+        <script>
+        var check = function() {
+        if (document.getElementById('myInput1').value ==
+            document.getElementById('myInput').value) {
+            document.getElementById('message').style.color = 'green';
+            document.getElementById('message').innerHTML = 'Matching';
+        } else {
+            document.getElementById('message').style.color = 'red';
+            document.getElementById('message').innerHTML = 'Not Matching';
+        }
+        }
+            
+        function myFunction() {
+        var x = document.getElementById("myInput");
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+        var x = document.getElementById("myInput1");
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+        }
+        </script>
+
         <div class = form-group>
             <input type="hidden" name="id" value="<?= $row["id"] ?>" style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block">
             <input type="submit" value="Update" class="btn btn-success form-control" style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block"></input>
@@ -129,34 +169,6 @@ html, body , .container {
   </div>
 
   <div class="alle">
-
-    <!-- edit details form 
-    <form method="post" action="account-edit-allergies-action.php">
-        <div class="form-group">
-            <label for="allergies" class="form-label mt-4" style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block">Allergies:</label>
-
-            <div class="form-group">
-                <label for="exampleInputPollen" class="form-label mt-4" style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block">Pollen</label>
-                <input type="checkbox" name="allergies[]" value="Pollen" style="margin-top: 1%; margin-left: auto; margin-right: auto; display:block">
-            </div>
-                <div class="form-group">
-                <label for="exampleInputDust" class="form-label mt-4"  style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block">Dust</label>
-                <input type="checkbox" name="allergies[]" value="Dust" style="margin-top: 1%; margin-left: auto; margin-right: auto; display:block">
-            </div>
-                <div class="form-group">
-                <label for="exampleInputMold" class="form-label mt-4" style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block">Mold</label>
-                <input type="checkbox" name="allergies[]" value="Mold" style="margin-top: 1%; margin-left: auto; margin-right: auto; display:block">
-            </div>
-            <div class="form-group">
-                <label for="exampleInputPetDander" class="form-label mt-4" style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block">Pet Dander</label>
-                <input type="checkbox" name="allergies[]" value="Pet Dander" style="margin-top: 1%; margin-left: auto; margin-right: auto; display:block">
-            </div>
-
-        </div>
-        <input type="submit" value="Save Changes" class="btn btn-danger form-control" style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block"></input>
-    </form>
-  </div>
-    -->
     <?php
     $user_id = $_SESSION["userid"];
 
@@ -187,23 +199,20 @@ html, body , .container {
     $allergy_list = explode(',', $user_allergies);
 
     ?>
+    <form action="account-edit-allergies-action.php" method="post">
     <div class="form-group">
-        <span class ="primary form-control" style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block; text-align: center"> Edit Details </span>
+        <span class ="primary form-control" style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block; text-align: center"> Edit Personal Details </span>
     </div>
     <div class="form-group">
-        <label for="exampleInputPC" class="form-label mt-4" class="form-label mt-4" style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block">Date Of Birth</label>
-        <input type="text" name="dob" value="<?= $row["dob"] ?>" class="form-control" style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block">
+        <label for="dateOfBirth" style="margin-top: 1%; display:block; margin-right: auto;">Date of Birth</label>
+        <input type="date" class="form-control" id="dateOfBirth" value="<?= $row["dob"] ?>" name="dob" style="margin-top: 1%; display:block; margin-right: auto; " required>
+      </div>
+    <div class="form-group">
+        <label for="exampleInputPC" class="form-label mt-4" class="form-label mt-4" style="margin-top: 1%; auto; margin-right: auto; ; display:block">Postcode</label>
+        <input type="text" name="postcode" value="<?= $row["postcode"] ?>" class="form-control" style="margin-top: 1%; auto; margin-right: auto; ; display:block">
     </div>
     <div class="form-group">
-        <label for="exampleInputPC" class="form-label mt-4" class="form-label mt-4" style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block">Postcode</label>
-        <input type="text" name="postcode" value="<?= $row["postcode"] ?>" class="form-control" style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block">
-    </div>
-    <div class="form-group">
-        <label for="exampleInputPC" class="form-label mt-4" class="form-label mt-4" style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block">Postcode</label>
-        <input type="text" name="postcode" value="<?= $row["gender"] ?>" class="form-control" style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block">
-    </div>
-    <div class="form-group">
-        <label for="gender" style="margin-top: 1%;  margin-left: auto; width: 80%; display:block;margin-right: auto; ">Gender</label>
+        <label for="gender" style="margin-top: 1%; width: 80%; display:block; margin-right: auto; ">Gender</label>
         <select class="form-control" value="<?= $row["gender"] ?>" id="gender" name="gender"  required>
           <option value="">-- Select Gender --</option>
           <option value="male">Male</option>
@@ -215,7 +224,7 @@ html, body , .container {
     <div class="form-group">
         <span class ="primary form-control" style="margin-top: 1%; margin-left: auto; margin-right: auto; ; display:block; text-align: center"> Edit Allergies </span>
     </div>
-    <form action="account-edit-allergies-action.php" method="post">
+    
     <?php foreach ($allergies as $allergy) : ?>
         <div class="form-check">
             <input class="form-check-input" type="checkbox" name="allergies[]" value="<?= $allergy ?>"
@@ -246,28 +255,12 @@ html, body , .container {
   <div class="misc"></div>
 </div>
 
-
-    
-
-
-
-
-
-
-
-    
-
-
-
-
 <?php
 
 $result->free_result();
 $conn->close();
 
 ?>
-
-
 
 </body>
 </html>
