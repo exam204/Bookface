@@ -13,9 +13,10 @@ function dbcheck(){
 
     if ($email) {
         $_SESSION["emailverify"] = true;
+        $_SESSION["emailalert"] = false;
     } else {
         $_SESSION["emailverify"] = false;
-        $_SESSION["emailalert"] = false;
+        
     }
 }
 
