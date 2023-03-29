@@ -69,7 +69,7 @@ if(!isset($_SESSION["userid"])){
     <center>
     <table>
         <tr>
-            <th> Name </th>
+            <th> Username </th>
             <th> Email </th>
             <th> IsAdmin </th>
             <th> Edit </th>
@@ -101,7 +101,7 @@ if(isset($_SESSION["isadmin"]) && $_SESSION["isadmin"] == true){
 
 <?php while ($row = $result-> fetch_array(MYSQLI_ASSOC)): ?>
     <tr>
-        <td><?= $row["name"] ?></td>
+        <td><?= $row["uname"] ?></td>
         <td><?= $row["email"] ?></td>
         <td><?= $row["is_admin"] ?></td>
         <td><a href="edit-user.php?id=<?= $row["id"] ?>"> Edit </a> </td>

@@ -17,6 +17,7 @@ $stmt = $conn->prepare($sql);
 $row = $stmt->execute();
 $result = $stmt->get_result();
 $row = $result->fetch_assoc();
+$conn -> close();
 
 
 ?>

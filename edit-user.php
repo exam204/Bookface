@@ -5,11 +5,10 @@ require dirname(__FILE__). "/PHPFunc/db-connect.php";
 
 require dirname(__FILE__). "/PHPFunc/dbcheck.php"; 
 
-
+$userid = $_SESSION["userid"];
 $conn = connect();
-$sql = "SELECT * FROM users WHERE id = ?";
+$sql = "SELECT * FROM users WHERE id = $userid";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $_GET["id"]);
 $row = $stmt->execute();
 $result = $stmt->get_result();
 $row = $result->fetch_assoc();
@@ -65,11 +64,11 @@ $row = $result->fetch_assoc();
         </div>
         <div class="form-group">
         <label for="exampleInputName" class="form-label mt-4" class="form-label mt-4" style="margin-top: 1%; margin-left: auto; margin-right: auto; width: 20%; display:block">Last Name</label>
-            <input type="text" name="name" value="<?= $row["lname"]  ?>" class="form-control" style="margin-top: 1%; margin-left: auto; margin-right: auto; width: 20%; display:block">
+            <input type="text" name="lname" value="<?= $row["lname"]  ?>" class="form-control" style="margin-top: 1%; margin-left: auto; margin-right: auto; width: 20%; display:block">
         </div>
         <div class="form-group">
         <label for="exampleInputName" class="form-label mt-4" class="form-label mt-4" style="margin-top: 1%; margin-left: auto; margin-right: auto; width: 20%; display:block">Username</label>
-            <input type="text" name="name" value="<?= $row["uname"]  ?>" class="form-control" style="margin-top: 1%; margin-left: auto; margin-right: auto; width: 20%; display:block">
+            <input type="text" name="uname" value="<?= $row["uname"]  ?>" class="form-control" style="margin-top: 1%; margin-left: auto; margin-right: auto; width: 20%; display:block">
         </div>
         <div class="form-group">
             <label for="exampleInputEmail1" class="form-label mt-4" class="form-label mt-4" style="margin-top: 1%; margin-left: auto; margin-right: auto; width: 20%; display:block">Email address</label>

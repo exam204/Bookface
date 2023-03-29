@@ -57,6 +57,7 @@ require dirname(__FILE__). "/PHPFunc/db-connect.php";
         $sql = "SELECT messages.id AS msg_id, uname, message, date, userid FROM messages LEFT JOIN users ON messages.userid = users.id ORDER BY messages.id DESC"; 
         $result = mysqli_query($conn, $sql);
         while($row = mysqli_fetch_assoc($result)){
+            
             $name = $row['uname'];
             $message = $row['message'];
             $date = $row['date'];
