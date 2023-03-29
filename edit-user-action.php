@@ -22,9 +22,9 @@ session_start()
 $conn = connect();
 $hash = $_POST["password"];
 $hash = password_hash($hash, PASSWORD_DEFAULT);
-$query = "UPDATE users SET name=?, email=?, password=?, is_admin=? WHERE id=?";
+$query = "UPDATE users SET name=?, lname=?, uname=?, email=?, password=?, is_admin=? WHERE id=?";
 $stmt = $conn->prepare($query);
-$stmt->bind_param("sssii", $_POST["name"], $_POST["email"], $hash, $_POST["isadmin"], $_POST["id"]);
+$stmt->bind_param("sssssii", $_POST["name"], $_POST["lname"], $_POST["uname"], $_POST["email"], $hash, $_POST["isadmin"], $_POST["id"]);
 $stmt->execute();
 
 header ("Location: /projects/Bookface/admin.php");

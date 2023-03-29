@@ -34,7 +34,7 @@ if(!isset($_SESSION["userid"])){
 
     table th {
         
-        color: white;
+        color: black;
         text-align: left;
         padding: 12px;
         

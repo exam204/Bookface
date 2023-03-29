@@ -30,6 +30,13 @@ if(isset($_SESSION["contact"])){
 	unset($_SESSION["contact"]);
 }
 ?>
+
+<style>
+	.container{
+		margin-top: 5%;
+	}
+</style>
+
 <div class="container">
 		<div class="row">
 			<div class="col-md-6 mx-auto">

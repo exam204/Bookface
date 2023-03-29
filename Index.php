@@ -21,12 +21,13 @@ session_start();
 <style>
         h1 {
         text-align: center;
-        color: white;
+        color: black;
         font-size: 400%;
+        margin-top: 5%;
     }
 </style>
 
-<h1> Welcome </h1>
+<h1> Welcome To Health Advice Group </h1>
 
 
     <?php

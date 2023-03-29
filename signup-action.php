@@ -76,7 +76,7 @@ function addtodb(){
     }
     //$dob = $_SESSION["dob"];
     //$dob = date("Y-m-d", strtotime($dob));
-    $dob = 2005-01-01;
+    $dob = $_SESSION["dob"];
     $conn = connect();
     $hash = $_SESSION["password"];
     $hash = password_hash($hash, PASSWORD_DEFAULT);
